@@ -1,5 +1,6 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
+import com.example.satoruquizzes.satoquiz.model.entity.Student;
 import com.example.satoruquizzes.satoquiz.model.entity.Subject;
 import com.example.satoruquizzes.satoquiz.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
