@@ -1,5 +1,7 @@
 package com.example.satoruquizzes.satoquiz.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,5 +29,6 @@ public class Level {
     private double minPoints;
 
     @OneToMany(mappedBy = "level")
+    @JsonIgnore
     private List<Question> questions;
 }

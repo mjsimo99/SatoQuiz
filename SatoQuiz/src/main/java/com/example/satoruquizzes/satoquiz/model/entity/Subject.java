@@ -1,6 +1,7 @@
 package com.example.satoruquizzes.satoquiz.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,9 +28,12 @@ public class Subject {
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
+    @JsonIgnore
+
     private Subject parent;
 
     @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Question> questions = new ArrayList<>();
 
 }

@@ -18,24 +18,25 @@ public class LevelService {
         return levelRepository.save(level);
     }
 
-    public Level updateLevel(Long levelId, Level updatedLevel) {
-        Level existingLevel = getLevelById(levelId);
-        existingLevel.setDescription(updatedLevel.getDescription());
-        existingLevel.setMaxPoints(updatedLevel.getMaxPoints());
-        existingLevel.setMinPoints(updatedLevel.getMinPoints());
-        return save(existingLevel);
-    }
-
-    public List<Level> getAllLevels() {
+    public List<Level> getAll() {
         return levelRepository.findAll();
     }
 
-    public Level getLevelById(Long levelId) {
-        return levelRepository.findById(levelId)
-                .orElseThrow(() -> new NotFoundException("Level not found for ID: " + levelId));
+    public Level getById(Long id) {
+        return levelRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Level not found for id: " + id));
     }
 
-    public void deleteLevel(Long levelId) {
-        levelRepository.deleteById(levelId);
+    public Level update(Long id, Level newLevel) {
+        Level existingLevel = getById(id);
+        existingLevel.setDescription(newLevel.getDescription());
+        existingLevel.setMaxPoints(newLevel.getMaxPoints());
+        existingLevel.setMinPoints(newLevel.getMinPoints());
+
+        return levelRepository.save(existingLevel);
+    }
+
+    public void delete(Long id) {
+        levelRepository.deleteById(id);
     }
 }

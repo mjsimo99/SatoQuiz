@@ -20,28 +20,26 @@ public class LevelController {
         return ResponseEntity.ok(savedLevel);
     }
 
-    @PutMapping("/{levelId}")
-    public ResponseEntity<Level> updateLevel(@PathVariable Long levelId, @RequestBody Level updatedLevel) {
-        Level updated = levelService.updateLevel(levelId, updatedLevel);
-        return ResponseEntity.ok(updated);
-    }
-
     @GetMapping("/all")
-    public ResponseEntity<List<Level>> getAllLevels() {
-        List<Level> levels = levelService.getAllLevels();
-        return ResponseEntity.ok(levels);
+    public List<Level> getAllLevels() {
+        return levelService.getAll();
     }
 
-    @GetMapping("/{levelId}")
-    public ResponseEntity<Level> getLevelById(@PathVariable Long levelId) {
-        Level level = levelService.getLevelById(levelId);
+    @GetMapping("/{id}")
+    public ResponseEntity<Level> getLevelById(@PathVariable Long id) {
+        Level level = levelService.getById(id);
         return ResponseEntity.ok(level);
     }
 
-    @DeleteMapping("/{levelId}")
-    public ResponseEntity<Void> deleteLevel(@PathVariable Long levelId) {
-        levelService.deleteLevel(levelId);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Level> updateLevel(@PathVariable Long id, @RequestBody Level level) {
+        Level updatedLevel = levelService.update(id, level);
+        return ResponseEntity.ok(updatedLevel);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteLevel(@PathVariable Long id) {
+        levelService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
-

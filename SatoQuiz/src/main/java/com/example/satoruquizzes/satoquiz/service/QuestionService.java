@@ -18,29 +18,30 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
-    public Question updateQuestion(Long questionId, Question updatedQuestion) {
-        Question existingQuestion = getQuestionById(questionId);
-        existingQuestion.setAnswersNumber(updatedQuestion.getAnswersNumber());
-        existingQuestion.setAnswersNumberCorrect(updatedQuestion.getAnswersNumberCorrect());
-        existingQuestion.setText(updatedQuestion.getText());
-        existingQuestion.setDuration(updatedQuestion.getDuration());
-        existingQuestion.setType(updatedQuestion.getType());
-        existingQuestion.setScorePoints(updatedQuestion.getScorePoints());
-        existingQuestion.setSubject(updatedQuestion.getSubject());
-        existingQuestion.setLevel(updatedQuestion.getLevel());
-        return save(existingQuestion);
-    }
-
-    public List<Question> getAllQuestions() {
+    public List<Question> getAll() {
         return questionRepository.findAll();
     }
 
-    public Question getQuestionById(Long questionId) {
-        return questionRepository.findById(questionId)
-                .orElseThrow(() -> new NotFoundException("Question not found for ID: " + questionId));
+    public Question getById(Long id) {
+        return questionRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Question not found for id: " + id));
     }
 
-    public void deleteQuestion(Long questionId) {
-        questionRepository.deleteById(questionId);
+    public Question update(Long id, Question newQuestion) {
+        Question existingQuestion = getById(id);
+        existingQuestion.setAnswersNumber(newQuestion.getAnswersNumber());
+        existingQuestion.setAnswersNumberCorrect(newQuestion.getAnswersNumberCorrect());
+        existingQuestion.setText(newQuestion.getText());
+        existingQuestion.setDuration(newQuestion.getDuration());
+        existingQuestion.setType(newQuestion.getType());
+        existingQuestion.setScorePoints(newQuestion.getScorePoints());
+        existingQuestion.setSubject(newQuestion.getSubject());
+        existingQuestion.setLevel(newQuestion.getLevel());
+
+        return questionRepository.save(existingQuestion);
+    }
+
+    public void delete(Long id) {
+        questionRepository.deleteById(id);
     }
 }

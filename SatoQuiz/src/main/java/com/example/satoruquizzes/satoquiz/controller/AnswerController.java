@@ -3,6 +3,8 @@ package com.example.satoruquizzes.satoquiz.controller;
 import com.example.satoruquizzes.satoquiz.model.entity.Answer;
 import com.example.satoruquizzes.satoquiz.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,22 +17,26 @@ public class AnswerController {
     private AnswerService answerService;
 
     @PostMapping("/add")
-    public Answer addAnswer(@RequestBody Answer answer) {
-        return answerService.save(answer);
+    public ResponseEntity<Answer> addAnswer(@RequestBody Answer answer) {
+        Answer savedAnswer = answerService.save(answer);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAnswer);
     }
 
     @GetMapping("/all")
-    public List<Answer> getAllAnswers() {
-        return answerService.getAllAnswers();
+    public ResponseEntity<List<Answer>> getAllAnswers() {
+        List<Answer> answers = answerService.getAllAnswers();
+        return ResponseEntity.ok(answers);
     }
 
     @GetMapping("/{answerId}")
-    public Answer getAnswerById(@PathVariable Long answerId) {
-        return answerService.getAnswerById(answerId);
+    public ResponseEntity<Answer> getAnswerById(@PathVariable Long answerId) {
+        Answer answer = answerService.getAnswerById(answerId);
+        return ResponseEntity.ok(answer);
     }
 
     @DeleteMapping("/{answerId}")
-    public void deleteAnswer(@PathVariable Long answerId) {
+    public ResponseEntity<Void> deleteAnswer(@PathVariable Long answerId) {
         answerService.deleteAnswer(answerId);
+        return ResponseEntity.noContent().build();
     }
 }
