@@ -47,6 +47,5 @@ public class Question {
     @JoinColumn(name = "level")
     private Level level;
 
-    @OneToMany(mappedBy = "question")
-    private List<Validation> validations;
+
 }

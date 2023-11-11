@@ -1,14 +1,9 @@
 package com.example.satoruquizzes.satoquiz.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
-import java.time.LocalTime;
+import java.io.Serializable;
 
 @Data
 @ToString
@@ -17,10 +12,24 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "TestQuestions")
-public class TestQuestion {
+@IdClass(TestQuestion.TestQuestionId.class)
+public class TestQuestion implements Serializable {
 
-    private LocalTime time;
-    private double score;
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "test_id")
     private Test test;
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "question_id")
     private Question question;
+
+    private double score;
+
+    public static class TestQuestionId implements Serializable {
+        private Test test;
+        private Question question;
+
+    }
 }

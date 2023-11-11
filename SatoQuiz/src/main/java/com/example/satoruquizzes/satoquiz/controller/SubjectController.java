@@ -1,6 +1,5 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
-import com.example.satoruquizzes.satoquiz.model.entity.Student;
 import com.example.satoruquizzes.satoquiz.model.entity.Subject;
 import com.example.satoruquizzes.satoquiz.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,4 +32,10 @@ public class SubjectController {
     public void deleteSubject(@PathVariable Long subjectId) {
         subjectService.delete(subjectId);
     }
+    @PutMapping("/{subjectId}")
+    public Subject updateSubject(@PathVariable Long subjectId, @RequestBody Subject updatedSubject) {
+        return subjectService.updateSubject(subjectId, updatedSubject.getIntitule());
+    }
+
+
 }

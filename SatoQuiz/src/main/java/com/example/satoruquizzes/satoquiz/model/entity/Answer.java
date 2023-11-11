@@ -13,12 +13,11 @@ import java.util.List;
 @Entity
 @Table(name = "Answers")
 public class Answer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
+    private String answerText;
 
-    private String answer;
 
-    @OneToMany(mappedBy = "answer")
-    private List<Validation> validations;
 }

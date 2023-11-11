@@ -1,9 +1,14 @@
 package com.example.satoruquizzes.satoquiz.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @ToString
@@ -11,18 +16,20 @@ import java.util.List;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "Subjects")
+
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "label")
-    private String label;
+    private int id;
+
+    @NonNull
+    private String intitule;
 
     @ManyToOne
-    @JoinColumn(name = "parent")
+    @JoinColumn(name = "parent_id")
     private Subject parent;
 
-    @OneToMany(mappedBy = "parent")
-    private List<Subject> children;
+    @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Question> questions = new ArrayList<>();
+
 }

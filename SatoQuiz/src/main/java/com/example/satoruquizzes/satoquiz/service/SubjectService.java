@@ -30,4 +30,11 @@ public class SubjectService {
     public void delete(Long subjectId) {
         subjectRepository.deleteById(subjectId);
     }
+    public Subject updateSubject(Long subjectId, String newIntitule) {
+        Subject existingSubject = getSubjectById(subjectId);
+        existingSubject.setIntitule(newIntitule);
+        return save(existingSubject);
+    }
+
+
 }
