@@ -28,7 +28,6 @@ public class Subject {
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
-    @JsonIgnore
 
     private Subject parent;
 

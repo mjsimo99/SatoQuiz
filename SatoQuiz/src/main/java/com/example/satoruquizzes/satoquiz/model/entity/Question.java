@@ -2,6 +2,7 @@ package com.example.satoruquizzes.satoquiz.model.entity;
 
 import com.example.satoruquizzes.satoquiz.model.enums.TypeAnswer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -48,5 +49,8 @@ public class Question {
     @JoinColumn(name = "level")
     private Level level;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "question")
+    private List<Validation> validations;
 
 }

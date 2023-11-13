@@ -1,5 +1,6 @@
 package com.example.satoruquizzes.satoquiz.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,11 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
     private String answerText;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "answer")
+    private List<Validation> validations;
+
 
 
 }

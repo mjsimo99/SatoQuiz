@@ -34,6 +34,11 @@ public class AnswerController {
         return ResponseEntity.ok(answer);
     }
 
+    @PutMapping("/update/{answerId}")
+    public ResponseEntity<Answer> updateAnswer(@PathVariable Long answerId, @RequestBody Answer updatedAnswer) {
+        Answer updatedEntity = answerService.update(answerId, updatedAnswer);
+        return ResponseEntity.ok(updatedEntity);
+    }
     @DeleteMapping("/{answerId}")
     public ResponseEntity<Void> deleteAnswer(@PathVariable Long answerId) {
         answerService.deleteAnswer(answerId);
