@@ -51,4 +51,12 @@ public class ValidationService {
                         "questionId=" + questionId + ", answerId=" + answerId));
     }
 
+    public Validation updateValidation(Long questionId, Long answerId, ValidationDTO updatedValidationDTO) {
+        Validation existingValidation = getValidationByIds(questionId, answerId);
+
+        existingValidation.setPoints(updatedValidationDTO.getPoints());
+
+        return validationRepository.save(existingValidation);
+
+    }
 }

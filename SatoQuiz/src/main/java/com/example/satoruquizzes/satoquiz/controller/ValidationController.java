@@ -39,4 +39,13 @@ public class ValidationController {
         return ResponseEntity.ok(validation);
     }
 
+    @PutMapping("/update/{questionId}/{answerId}")
+    public ResponseEntity<Validation> updateValidation(
+            @PathVariable Long questionId,
+            @PathVariable Long answerId,
+            @RequestBody ValidationDTO updatedValidationDTO) {
+        Validation updatedValidation = validationService.updateValidation(questionId, answerId, updatedValidationDTO);
+        return ResponseEntity.ok(updatedValidation);
+    }
+
 }
