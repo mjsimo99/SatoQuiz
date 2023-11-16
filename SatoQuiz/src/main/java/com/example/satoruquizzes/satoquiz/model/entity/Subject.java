@@ -19,20 +19,24 @@ import java.util.Set;
 @Entity
 
 public class Subject {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @NonNull
     private String intitule;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
-
     private Subject parent;
+
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Subject> children = new ArrayList<>();
 
     @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Question> questions = new ArrayList<>();
 
+    // Other methods as needed
 }

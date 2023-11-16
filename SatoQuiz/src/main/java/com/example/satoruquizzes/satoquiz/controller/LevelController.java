@@ -1,5 +1,6 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
+import com.example.satoruquizzes.satoquiz.model.dto.LevelDTO;
 import com.example.satoruquizzes.satoquiz.model.entity.Level;
 import com.example.satoruquizzes.satoquiz.service.LevelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,30 +12,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/levels")
 public class LevelController {
+
     @Autowired
     private LevelService levelService;
 
     @PostMapping("/add")
-    public ResponseEntity<Level> addLevel(@RequestBody Level level) {
-        Level savedLevel = levelService.save(level);
-        return ResponseEntity.ok(savedLevel);
+    public ResponseEntity<LevelDTO> addLevel(@RequestBody LevelDTO levelDTO) {
+        LevelDTO savedLevelDTO = levelService.save(levelDTO);
+        return ResponseEntity.ok(savedLevelDTO);
     }
 
     @GetMapping("/all")
-    public List<Level> getAllLevels() {
+    public List<LevelDTO> getAllLevels() {
         return levelService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Level> getLevelById(@PathVariable Long id) {
-        Level level = levelService.getById(id);
-        return ResponseEntity.ok(level);
+    public ResponseEntity<LevelDTO> getLevelById(@PathVariable Long id) {
+        LevelDTO levelDTO = levelService.getById(id);
+        return ResponseEntity.ok(levelDTO);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Level> updateLevel(@PathVariable Long id, @RequestBody Level level) {
-        Level updatedLevel = levelService.update(id, level);
-        return ResponseEntity.ok(updatedLevel);
+    public ResponseEntity<LevelDTO> updateLevel(@PathVariable Long id, @RequestBody LevelDTO levelDTO) {
+        LevelDTO updatedLevelDTO = levelService.update(id, levelDTO);
+        return ResponseEntity.ok(updatedLevelDTO);
     }
 
     @DeleteMapping("/delete/{id}")

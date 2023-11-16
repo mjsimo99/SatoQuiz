@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -29,6 +31,7 @@ public class Question {
     @Column(name = "answersNumberCorrect")
     private int answersNumberCorrect;
 
+    @NotNull
     private String text;
 
     @Column(name = "duration")
@@ -50,7 +53,13 @@ public class Question {
     private Level level;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Validation> validations;
+
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Media> mediaList;
+
+
 
 }

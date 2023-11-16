@@ -1,5 +1,6 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
+import com.example.satoruquizzes.satoquiz.model.dto.AnswerDTO;
 import com.example.satoruquizzes.satoquiz.model.entity.Answer;
 import com.example.satoruquizzes.satoquiz.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +18,29 @@ public class AnswerController {
     private AnswerService answerService;
 
     @PostMapping("/add")
-    public ResponseEntity<Answer> addAnswer(@RequestBody Answer answer) {
-        Answer savedAnswer = answerService.save(answer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedAnswer);
+    public ResponseEntity<AnswerDTO> addAnswer(@RequestBody AnswerDTO answerDTO) {
+        AnswerDTO savedAnswerDTO = answerService.save(answerDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAnswerDTO);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Answer>> getAllAnswers() {
-        List<Answer> answers = answerService.getAllAnswers();
+    public ResponseEntity<List<AnswerDTO>> getAllAnswers() {
+        List<AnswerDTO> answers = answerService.getAllAnswers();
         return ResponseEntity.ok(answers);
     }
 
     @GetMapping("/{answerId}")
-    public ResponseEntity<Answer> getAnswerById(@PathVariable Long answerId) {
-        Answer answer = answerService.getAnswerById(answerId);
-        return ResponseEntity.ok(answer);
+    public ResponseEntity<AnswerDTO> getAnswerById(@PathVariable Long answerId) {
+        AnswerDTO answerDTO = answerService.getAnswerById(answerId);
+        return ResponseEntity.ok(answerDTO);
     }
 
     @PutMapping("/update/{answerId}")
-    public ResponseEntity<Answer> updateAnswer(@PathVariable Long answerId, @RequestBody Answer updatedAnswer) {
-        Answer updatedEntity = answerService.update(answerId, updatedAnswer);
-        return ResponseEntity.ok(updatedEntity);
+    public ResponseEntity<AnswerDTO> updateAnswer(@PathVariable Long answerId, @RequestBody AnswerDTO updatedAnswerDTO) {
+        AnswerDTO updatedEntityDTO = answerService.update(answerId, updatedAnswerDTO);
+        return ResponseEntity.ok(updatedEntityDTO);
     }
+
     @DeleteMapping("/{answerId}")
     public ResponseEntity<Void> deleteAnswer(@PathVariable Long answerId) {
         answerService.deleteAnswer(answerId);

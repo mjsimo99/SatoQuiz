@@ -2,12 +2,15 @@ package com.example.satoruquizzes.satoquiz.service;
 
 
 import com.example.satoruquizzes.satoquiz.exception.NotFoundException;
+import com.example.satoruquizzes.satoquiz.model.dto.AnswerDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.QuestionDTO;
 import com.example.satoruquizzes.satoquiz.model.dto.ValidationDTO;
 import com.example.satoruquizzes.satoquiz.model.entity.Answer;
 import com.example.satoruquizzes.satoquiz.model.entity.Question;
 import com.example.satoruquizzes.satoquiz.model.entity.Validation;
 import com.example.satoruquizzes.satoquiz.model.entity.ValidationId;
 import com.example.satoruquizzes.satoquiz.repository.ValidationRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +28,15 @@ public class ValidationService {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     public Validation save(ValidationDTO validationDTO) {
-        Answer answer = answerService.getAnswerById(validationDTO.getAnswerId());
-        Question question = questionService.getById(validationDTO.getQuestionId());
+        AnswerDTO answerDTO = answerService.getAnswerById(validationDTO.getAnswerId());
+        Answer answer = modelMapper.map(answerDTO, Answer.class);
+
+        QuestionDTO questionDTO = questionService.getById(validationDTO.getQuestionId());
+        Question question = modelMapper.map(questionDTO, Question.class);
 
         Validation validation = new Validation();
         validation.setAnswer(answer);
@@ -57,6 +66,5 @@ public class ValidationService {
         existingValidation.setPoints(updatedValidationDTO.getPoints());
 
         return validationRepository.save(existingValidation);
-
     }
 }

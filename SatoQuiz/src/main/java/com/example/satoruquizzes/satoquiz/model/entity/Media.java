@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Data
 @ToString
@@ -19,5 +20,12 @@ public class Media {
     private Long mediaId;
     private String link;
     private MediaType type;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private Question question;
+
+
 
 }
