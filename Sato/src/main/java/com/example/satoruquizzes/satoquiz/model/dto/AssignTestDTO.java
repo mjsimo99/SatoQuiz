@@ -26,10 +26,9 @@ public class AssignTestDTO {
     @NotNull(message = "Final result cannot be null")
     private double finalResult;
 
-    @NotNull(message = "Student ID cannot be null")
-    private Long studentId;
+    @NotNull(message = "Student cannot be null")
+    private StudentDTO student;
 
-    @NotNull(message = "Test ID cannot be null")
-    private Long testId;
-
+    @NotNull(message = "Test cannot be null")
+    private TestDTO test;
 }

@@ -31,8 +31,8 @@ public class TestDTO {
     @Size(max = 255, message = "Instructions cannot exceed 255 characters")
     private String instructions;
 
-    @NotNull(message = "Teacher ID cannot be null")
-    private Long teacherId;
+    @NotNull(message = "Teacher cannot be null")
+    private TeacherDTO teacher;
 
 
 
