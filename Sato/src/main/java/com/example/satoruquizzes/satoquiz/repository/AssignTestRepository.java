@@ -1,4 +1,4 @@
-package com.example.satoruquizzes.satoquiz.service;
+package com.example.satoruquizzes.satoquiz.repository;
 
 import com.example.satoruquizzes.satoquiz.model.entity.AssignTest;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -28,10 +28,7 @@ public class QuestionDTO {
     private double scorePoints;
     private SubjectDTO subject;
     private LevelDTO level;
-    /*
-    private Long subjectId;
-    private Long levelId;
-     */
+
     private List<MediaDTO> mediaList;
 
 

@@ -24,7 +24,5 @@ public class Validation {
     @JsonIgnore
     private double points;
 
-    @ManyToOne
-    @JoinColumn(name = "reponse_id")
-    private Reponse reponse;
+
 }

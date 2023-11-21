@@ -3,6 +3,7 @@ package com.example.satoruquizzes.satoquiz.service;
 import com.example.satoruquizzes.satoquiz.exception.NotFoundException;
 import com.example.satoruquizzes.satoquiz.model.dto.AssignTestDTO;
 import com.example.satoruquizzes.satoquiz.model.entity.AssignTest;
+import com.example.satoruquizzes.satoquiz.repository.AssignTestRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

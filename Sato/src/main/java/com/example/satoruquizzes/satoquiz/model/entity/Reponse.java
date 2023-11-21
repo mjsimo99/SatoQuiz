@@ -1,5 +1,6 @@
 package com.example.satoruquizzes.satoquiz.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +23,6 @@ public class Reponse {
     @Column(name = "questionResult")
     private double questionResult;
 
-    @OneToMany(mappedBy = "reponse", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Validation> validations;
 
     @ManyToOne
     @JoinColumn(name = "assign_test_id")

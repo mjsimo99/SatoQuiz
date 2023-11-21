@@ -11,7 +11,7 @@ public class ReponseDTO {
     @NotNull(message = "Question result cannot be null")
     private double questionResult;
 
-    @NotNull(message = "Assign test ID cannot be null")
-    private Long assignTestId;
+    @NotNull(message = "Assign test cannot be null")
+    private AssignTestDTO assignTest;
 
 }
