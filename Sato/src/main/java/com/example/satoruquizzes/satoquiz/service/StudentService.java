@@ -47,6 +47,10 @@ public class StudentService {
         if (existingStudent.isPresent()) {
             Student studentToUpdate = existingStudent.get();
             studentToUpdate.setRegistrationDate(updatedStudentDTO.getRegistrationDate());
+            studentToUpdate.setFirstName(updatedStudentDTO.getFirstName());
+            studentToUpdate.setLastName(updatedStudentDTO.getLastName());
+            studentToUpdate.setDateOfBirth(updatedStudentDTO.getDateOfBirth());
+            studentToUpdate.setAddress(updatedStudentDTO.getAddress());
 
             studentToUpdate = studentRepository.save(studentToUpdate);
             return modelMapper.map(studentToUpdate, StudentDTO.class);

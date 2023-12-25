@@ -31,5 +31,6 @@ public class QuestionDTO {
 
     private List<MediaDTO> mediaList;
 
+    private List<ValidationRespDTO> validations;
 
 }

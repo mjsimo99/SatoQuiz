@@ -1,8 +1,12 @@
 package com.example.satoruquizzes.satoquiz;
-/*
+
 
 import com.example.satoruquizzes.satoquiz.exception.NotFoundException;
+import com.example.satoruquizzes.satoquiz.model.dto.MediaDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.QuestionDTO;
+import com.example.satoruquizzes.satoquiz.model.entity.Media;
 import com.example.satoruquizzes.satoquiz.model.entity.Question;
+import com.example.satoruquizzes.satoquiz.repository.MediaRepository;
 import com.example.satoruquizzes.satoquiz.repository.QuestionRepository;
 import com.example.satoruquizzes.satoquiz.service.QuestionService;
 import org.junit.jupiter.api.Test;
@@ -11,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,43 +29,71 @@ class QuestionServiceTest {
     @Mock
     private QuestionRepository questionRepository;
 
+    @Mock
+    private MediaRepository mediaRepository;
+
+    @Mock
+    private ModelMapper modelMapper;
+
     @InjectMocks
     private QuestionService questionService;
 
     @Test
     void testSaveQuestion() {
+        QuestionDTO questionDTOToSave = new QuestionDTO();
         Question questionToSave = new Question();
-        Mockito.when(questionRepository.save(questionToSave)).thenReturn(questionToSave);
+        Question savedQuestion = new Question();
+        QuestionDTO savedQuestionDTO = new QuestionDTO();
 
-        Question savedQuestion = questionService.save(questionToSave);
+        Mockito.when(modelMapper.map(questionDTOToSave, Question.class)).thenReturn(questionToSave);
+        Mockito.when(questionRepository.save(questionToSave)).thenReturn(savedQuestion);
+        Mockito.when(modelMapper.map(savedQuestion, QuestionDTO.class)).thenReturn(savedQuestionDTO);
 
+        QuestionDTO result = questionService.save(questionDTOToSave);
+
+        Mockito.verify(modelMapper, Mockito.times(1)).map(questionDTOToSave, Question.class);
         Mockito.verify(questionRepository, Mockito.times(1)).save(questionToSave);
-        assertNotNull(savedQuestion);
-        assertEquals(questionToSave, savedQuestion);
+        Mockito.verify(modelMapper, Mockito.times(1)).map(savedQuestion, QuestionDTO.class);
+
+        assertNotNull(result);
+        assertEquals(savedQuestionDTO, result);
     }
+
+
 
     @Test
     void testGetAllQuestions() {
         List<Question> questions = Arrays.asList(new Question(), new Question());
-        Mockito.when(questionRepository.findAll()).thenReturn(questions);
+        List<QuestionDTO> expectedQuestionDTOs = Arrays.asList(new QuestionDTO(), new QuestionDTO());
 
-        List<Question> result = questionService.getAll();
+        Mockito.when(questionRepository.findAll()).thenReturn(questions);
+        Mockito.when(modelMapper.map(Mockito.any(Question.class), Mockito.eq(QuestionDTO.class)))
+                .thenReturn(expectedQuestionDTOs.get(0), expectedQuestionDTOs.get(1));
+
+        List<QuestionDTO> result = questionService.getAll();
 
         Mockito.verify(questionRepository, Mockito.times(1)).findAll();
-        assertEquals(2, result.size());
+        Mockito.verify(modelMapper, Mockito.times(2)).map(Mockito.any(Question.class), Mockito.eq(QuestionDTO.class));
+
+        assertEquals(expectedQuestionDTOs, result);
     }
 
     @Test
     void testGetQuestionById() {
         Long questionId = 1L;
         Question expectedQuestion = new Question();
-        Mockito.when(questionRepository.findById(questionId)).thenReturn(Optional.of(expectedQuestion));
+        QuestionDTO expectedQuestionDTO = new QuestionDTO();
 
-        Question result = questionService.getById(questionId);
+        Mockito.when(questionRepository.findById(questionId)).thenReturn(Optional.of(expectedQuestion));
+        Mockito.when(modelMapper.map(expectedQuestion, QuestionDTO.class)).thenReturn(expectedQuestionDTO);
+
+        QuestionDTO result = questionService.getById(questionId);
 
         Mockito.verify(questionRepository, Mockito.times(1)).findById(questionId);
+        Mockito.verify(modelMapper, Mockito.times(1)).map(expectedQuestion, QuestionDTO.class);
+
         assertNotNull(result);
-        assertEquals(expectedQuestion, result);
+        assertEquals(expectedQuestionDTO, result);
     }
 
     @Test
@@ -74,26 +107,32 @@ class QuestionServiceTest {
     @Test
     void testUpdateQuestion() {
         Long questionId = 1L;
+        QuestionDTO updatedQuestionDTO = new QuestionDTO();
         Question existingQuestion = new Question();
         Question updatedQuestion = new Question();
-
-        updatedQuestion.setAnswersNumber(4);
-        updatedQuestion.setAnswersNumberCorrect(2);
-        updatedQuestion.setText("Updated Question Text");
-        // set other fields as needed
+        QuestionDTO expectedUpdatedQuestionDTO = new QuestionDTO();
 
         Mockito.when(questionRepository.findById(questionId)).thenReturn(Optional.of(existingQuestion));
         Mockito.when(questionRepository.save(existingQuestion)).thenReturn(updatedQuestion);
+        Mockito.when(modelMapper.map(updatedQuestion, QuestionDTO.class)).thenReturn(expectedUpdatedQuestionDTO);
 
-        Question result = questionService.update(questionId, updatedQuestion);
+        QuestionDTO result = questionService.update(questionId, updatedQuestionDTO);
 
         Mockito.verify(questionRepository, Mockito.times(1)).findById(questionId);
         Mockito.verify(questionRepository, Mockito.times(1)).save(existingQuestion);
+        Mockito.verify(modelMapper, Mockito.times(1)).map(updatedQuestion, QuestionDTO.class);
 
         assertNotNull(result);
-        assertEquals(updatedQuestion.getText(), result.getText());
-        assertEquals(updatedQuestion.getAnswersNumber(), result.getAnswersNumber());
-        assertEquals(updatedQuestion.getAnswersNumberCorrect(), result.getAnswersNumberCorrect());
+        assertEquals(expectedUpdatedQuestionDTO, result);
+    }
+
+    @Test
+    void testUpdateQuestionNotFound() {
+        Long questionId = 1L;
+        QuestionDTO updatedQuestionDTO = new QuestionDTO();
+        Mockito.when(questionRepository.findById(questionId)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> questionService.update(questionId, updatedQuestionDTO));
     }
 
     @Test
@@ -104,6 +143,3 @@ class QuestionServiceTest {
         Mockito.verify(questionRepository, Mockito.times(1)).deleteById(questionId);
     }
 }
-
-
- */

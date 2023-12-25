@@ -18,8 +18,7 @@ public class AssignTestDTO {
 
     private String raison;
 
-    @NotNull(message = "Score cannot be null")
-    private double score;
+
 
     private Integer attemptNumber;
 

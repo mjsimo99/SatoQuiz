@@ -2,17 +2,16 @@ package com.example.satoruquizzes.satoquiz.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
-@Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
 public class TestQuestionId implements Serializable {
-
-    @Column(name = "test_id")
-    private Long testId;
-
-    @Column(name = "question_id")
-    private Long questionId;
+    private Long test;
+    private Long question;
 }

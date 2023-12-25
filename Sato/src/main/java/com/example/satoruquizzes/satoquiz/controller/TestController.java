@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tests")
+@CrossOrigin
 public class TestController {
 
     @Autowired

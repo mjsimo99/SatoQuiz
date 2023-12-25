@@ -51,17 +51,14 @@ public class Question {
     @JoinColumn(name = "level")
     private Level level;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Validation> validations;
-
-    @JsonIgnore
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Media> mediaList;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TestQuestion> testQuestions;
+
 
 }

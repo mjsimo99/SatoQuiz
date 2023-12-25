@@ -23,7 +23,6 @@ public class AssignTest {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String raison;
-    private double score;
     private Integer attemptNumber;
     private double finalResult;
 

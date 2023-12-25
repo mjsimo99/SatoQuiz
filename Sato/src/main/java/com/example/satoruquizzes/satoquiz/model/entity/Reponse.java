@@ -7,15 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "Reponses")
 public class Reponse {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reponseId;
@@ -23,8 +22,17 @@ public class Reponse {
     @Column(name = "questionResult")
     private double questionResult;
 
-
     @ManyToOne
     @JoinColumn(name = "assign_test_id")
     private AssignTest assignTest;
+
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "question_id", referencedColumnName = "question_id"),
+            @JoinColumn(name = "answer_id", referencedColumnName = "answer_id")/* ,
+
+           */
+    })
+    @OrderColumn(name = "validation_order")
+    private Validation validation;
 }

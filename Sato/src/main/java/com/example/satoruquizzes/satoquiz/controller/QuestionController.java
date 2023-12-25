@@ -1,6 +1,7 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
 
+import com.example.satoruquizzes.satoquiz.exception.NotFoundException;
 import com.example.satoruquizzes.satoquiz.model.dto.QuestionDTO;
 import com.example.satoruquizzes.satoquiz.model.entity.Question;
 import com.example.satoruquizzes.satoquiz.service.QuestionService;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/questions")
+@CrossOrigin
 public class QuestionController {
 
     @Autowired
@@ -52,6 +54,7 @@ public class QuestionController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable Long id) {
         questionService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
+
 }

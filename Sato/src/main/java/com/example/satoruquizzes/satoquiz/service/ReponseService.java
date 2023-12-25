@@ -53,6 +53,9 @@ public class ReponseService {
         }
     }
 
+    public void deleteAllResponses(Long assignTestId) {
+        reponseRepository.deleteByAssignTestId(assignTestId);
+    }
     public void deleteReponse(Long reponseId) {
         reponseRepository.deleteById(reponseId);
     }

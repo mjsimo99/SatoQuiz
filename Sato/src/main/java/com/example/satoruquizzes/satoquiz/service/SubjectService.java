@@ -2,6 +2,7 @@ package com.example.satoruquizzes.satoquiz.service;
 
 import com.example.satoruquizzes.satoquiz.exception.NotFoundException;
 import com.example.satoruquizzes.satoquiz.model.dto.SubjectDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.SubjectDTOResponse;
 import com.example.satoruquizzes.satoquiz.model.entity.Subject;
 import com.example.satoruquizzes.satoquiz.repository.SubjectRepository;
 import org.modelmapper.ModelMapper;
@@ -24,26 +25,12 @@ public class SubjectService {
         Subject subject = modelMapper.map(subjectDTO, Subject.class);
         return modelMapper.map(subjectRepository.save(subject), SubjectDTO.class);
     }
-    /*
-    public SubjectDTO save(SubjectDTO subjectDTO) {
-        Subject subject = modelMapper.map(subjectDTO, Subject.class);
 
-        if (subjectDTO.getParentId() != null) {
-            Subject parent = subjectRepository.findById(subjectDTO.getParentId())
-                    .orElseThrow(() -> new NotFoundException("Parent subject not found for ID: " + subjectDTO.getParentId()));
-            subject.setParent(parent);
-        }
 
-        Subject savedSubject = subjectRepository.save(subject);
-        return modelMapper.map(savedSubject, SubjectDTO.class);
-    }
-
-     */
-
-    public List<SubjectDTO> getAll() {
+    public List<SubjectDTOResponse> getAll() {
         List<Subject> subjects = subjectRepository.findAll();
         return subjects.stream()
-                .map(subject -> modelMapper.map(subject, SubjectDTO.class))
+                .map(subject -> modelMapper.map(subject, SubjectDTOResponse.class))
                 .collect(Collectors.toList());
     }
 

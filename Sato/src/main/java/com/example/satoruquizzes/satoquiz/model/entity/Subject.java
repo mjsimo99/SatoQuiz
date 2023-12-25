@@ -32,12 +32,9 @@ public class Subject {
     private Subject parent;
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Subject> children = new ArrayList<>();
 
     @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Question> questions = new ArrayList<>();
 
-    // Other methods as needed
 }

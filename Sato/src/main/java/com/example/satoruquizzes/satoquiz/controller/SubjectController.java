@@ -1,7 +1,7 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
 import com.example.satoruquizzes.satoquiz.model.dto.SubjectDTO;
-import com.example.satoruquizzes.satoquiz.model.entity.Subject;
+import com.example.satoruquizzes.satoquiz.model.dto.SubjectDTOResponse;
 import com.example.satoruquizzes.satoquiz.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/subjects")
+@CrossOrigin
 public class SubjectController {
 
     @Autowired
@@ -24,7 +25,7 @@ public class SubjectController {
     }
 
     @GetMapping("/all")
-    public List<SubjectDTO> getAllSubjects() {
+    public List<SubjectDTOResponse> getAllSubjects() {
         return subjectService.getAll();
     }
 

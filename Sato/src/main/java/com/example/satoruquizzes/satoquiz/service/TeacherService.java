@@ -46,6 +46,11 @@ public class TeacherService {
         if (existingTeacher.isPresent()) {
             Teacher teacherToUpdate = existingTeacher.get();
             teacherToUpdate.setSpecialty(updatedTeacherDTO.getSpecialty());
+            teacherToUpdate.setFirstName(updatedTeacherDTO.getFirstName());
+            teacherToUpdate.setLastName(updatedTeacherDTO.getLastName());
+            teacherToUpdate.setDateOfBirth(updatedTeacherDTO.getDateOfBirth());
+            teacherToUpdate.setAddress(updatedTeacherDTO.getAddress());
+            
 
             teacherToUpdate = teacherRepository.save(teacherToUpdate);
             return modelMapper.map(teacherToUpdate, TeacherDTO.class);

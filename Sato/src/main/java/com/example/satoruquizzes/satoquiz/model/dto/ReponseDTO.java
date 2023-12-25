@@ -14,4 +14,10 @@ public class ReponseDTO {
     @NotNull(message = "Assign test cannot be null")
     private AssignTestDTO assignTest;
 
+    private ValidationDTO validation;
+
+    private AnswerDTO answer;
+
+    private QuestionDTO question;
+
 }

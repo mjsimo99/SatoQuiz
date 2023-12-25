@@ -4,25 +4,26 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.time.Duration;
+
 
 @Data
 @Entity
 @Table(name = "TestQuestions")
-public class TestQuestion {
+@IdClass(TestQuestionId.class)
+public class TestQuestion implements Serializable {
 
-    @EmbeddedId
-    private TestQuestionId id;
-
-    @JsonIgnore
+    @Id
     @ManyToOne
-    @MapsId("testId")
+    @JoinColumn(name = "test_id")
     private Test test;
 
-    @JsonIgnore
+    @Id
     @ManyToOne
-    @MapsId("questionId")
+    @JoinColumn(name = "question_id")
     private Question question;
 
-    private Duration temporize;
+    private Integer temporize;
 }

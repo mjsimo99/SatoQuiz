@@ -4,11 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 @Data
 @Entity
 @Table(name = "Validations")
 @IdClass(ValidationId.class)
 public class Validation {
+
 
 
     @Id
@@ -23,6 +28,10 @@ public class Validation {
 
     @JsonIgnore
     private double points;
+
+
+    @OneToMany(mappedBy = "validation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reponse> reponses = new ArrayList<>();
 
 
 }

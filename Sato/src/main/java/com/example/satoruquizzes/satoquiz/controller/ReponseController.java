@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/reponses")
+@CrossOrigin
 public class ReponseController {
 
     @Autowired
@@ -21,6 +22,15 @@ public class ReponseController {
     public ResponseEntity<ReponseDTO> addReponse(@RequestBody ReponseDTO reponseDTO) {
         ReponseDTO savedReponseDTO = reponseService.save(reponseDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedReponseDTO);
+    }
+    @DeleteMapping("/delete-all/{assignTestId}")
+    public ResponseEntity<Void> deleteAllResponsesByAssignTestId(@PathVariable Long assignTestId) {
+        try {
+            reponseService.deleteAllResponses(assignTestId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/all")

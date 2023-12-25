@@ -2,7 +2,9 @@ package com.example.satoruquizzes.satoquiz.service;
 
 import com.example.satoruquizzes.satoquiz.exception.NotFoundException;
 import com.example.satoruquizzes.satoquiz.model.dto.TestDTO;
+import com.example.satoruquizzes.satoquiz.model.entity.Teacher;
 import com.example.satoruquizzes.satoquiz.model.entity.Test;
+import com.example.satoruquizzes.satoquiz.repository.TeacherRepository;
 import com.example.satoruquizzes.satoquiz.repository.TestRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class TestService {
 
     @Autowired
     private TestRepository testRepository;
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -50,6 +54,13 @@ public class TestService {
             testToUpdate.setMaxAttempt(updatedTestDTO.getMaxAttempt());
             testToUpdate.setRemark(updatedTestDTO.getRemark());
             testToUpdate.setInstructions(updatedTestDTO.getInstructions());
+
+            //update teachar also
+
+            Teacher teacher = teacherRepository.findById(updatedTestDTO.getTeacher().getTeacherId())
+                    .orElseThrow(() -> new NotFoundException("Teacher not found for id: " + updatedTestDTO.getTeacher().getTeacherId()));
+            testToUpdate.setTeacher(teacher);
+
 
             testToUpdate = testRepository.save(testToUpdate);
             return modelMapper.map(testToUpdate, TestDTO.class);
