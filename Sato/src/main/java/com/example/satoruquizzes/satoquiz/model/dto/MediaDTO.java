@@ -17,6 +17,5 @@ public class MediaDTO {
     private MediaType type;
 
 
-    // @JsonProperty("questionDTO")
-    // private QuestionDTO questionDTO;
+
 }

@@ -1,7 +1,7 @@
 package com.example.satoruquizzes.satoquiz.model.dto;
 
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.ValidationRespDTO;
 import com.example.satoruquizzes.satoquiz.model.enums.TypeAnswer;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

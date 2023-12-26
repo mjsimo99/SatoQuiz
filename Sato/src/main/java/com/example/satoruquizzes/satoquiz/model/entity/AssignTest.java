@@ -35,5 +35,5 @@ public class AssignTest {
     private Test test;
 
     @OneToMany(mappedBy = "assignTest", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reponse> reponseList;
+    private List<Reponse> reponses;
 }

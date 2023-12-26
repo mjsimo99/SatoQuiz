@@ -1,9 +1,13 @@
 package com.example.satoruquizzes.satoquiz.model.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReponseDTO {
 
     private Long reponseId;
@@ -16,8 +20,8 @@ public class ReponseDTO {
 
     private ValidationDTO validation;
 
-    private AnswerDTO answer;
+    //private AnswerDTO answer;
 
-    private QuestionDTO question;
+    //private QuestionDTO question;
 
 }

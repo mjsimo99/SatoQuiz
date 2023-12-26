@@ -2,7 +2,7 @@ package com.example.satoruquizzes.satoquiz.service;
 
 import com.example.satoruquizzes.satoquiz.exception.NotFoundException;
 import com.example.satoruquizzes.satoquiz.model.dto.SubjectDTO;
-import com.example.satoruquizzes.satoquiz.model.dto.SubjectDTOResponse;
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.SubjectRespDTO;
 import com.example.satoruquizzes.satoquiz.model.entity.Subject;
 import com.example.satoruquizzes.satoquiz.repository.SubjectRepository;
 import org.modelmapper.ModelMapper;
@@ -27,10 +27,10 @@ public class SubjectService {
     }
 
 
-    public List<SubjectDTOResponse> getAll() {
+    public List<SubjectRespDTO> getAll() {
         List<Subject> subjects = subjectRepository.findAll();
         return subjects.stream()
-                .map(subject -> modelMapper.map(subject, SubjectDTOResponse.class))
+                .map(subject -> modelMapper.map(subject, SubjectRespDTO.class))
                 .collect(Collectors.toList());
     }
 
