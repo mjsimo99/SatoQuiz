@@ -9,8 +9,5 @@ public class ReponseRespDto {
     private double questionResult;
     private ValidationRespDTO validation;
 
-    //private AnswerDTO answer;
-
-    //private QuestionDTO question;
 
 }

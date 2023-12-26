@@ -1,20 +1,16 @@
-package com.example.satoruquizzes.satoquiz.model.dto;
+package com.example.satoruquizzes.satoquiz.model.dto.responseDto;
 
-import com.example.satoruquizzes.satoquiz.model.dto.responseDto.ReponseRespDto;
+import com.example.satoruquizzes.satoquiz.model.dto.ReponseDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.StudentDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.TestDTO;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-public class AssignTestDTO {
+public class AssignTestRespDTO {
 
     private Long assignTestId;
 
@@ -25,7 +21,6 @@ public class AssignTestDTO {
     private LocalDateTime endDate;
 
     private String raison;
-
 
 
     private Integer attemptNumber;
@@ -39,5 +34,6 @@ public class AssignTestDTO {
     @NotNull(message = "Test cannot be null")
     private TestDTO test;
 
+    private List<ReponseDTO> reponses;
 
 }
