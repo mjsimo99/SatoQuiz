@@ -18,7 +18,7 @@ public class GreetingController {
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public Room greet(Message message) {
-        return new Room("Hello, " + HtmlUtils.htmlEscape(message.getMessage()) + "!");
+        return new Room("Hello, " + HtmlUtils.htmlEscape(message.getText()) + "!");
 
     }
 
