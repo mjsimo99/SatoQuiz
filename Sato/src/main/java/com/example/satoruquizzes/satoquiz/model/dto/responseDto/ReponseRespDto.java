@@ -7,7 +7,7 @@ import lombok.Data;
 public class ReponseRespDto {
     private Long reponseId;
     private double questionResult;
-    private ValidationRespDTO validation;
+    private ValidationResponseDTO validation;
 
     //private AnswerDTO answer;
 
