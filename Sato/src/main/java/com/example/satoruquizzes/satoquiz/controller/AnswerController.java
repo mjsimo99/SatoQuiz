@@ -15,8 +15,11 @@ import java.util.List;
 @CrossOrigin
 public class AnswerController {
 
-    @Autowired
-    private AnswerService answerService;
+    private final AnswerService answerService;
+
+    public AnswerController(AnswerService answerService) {
+        this.answerService = answerService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<AnswerDTO> addAnswer(@RequestBody AnswerDTO answerDTO) {

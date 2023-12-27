@@ -1,6 +1,6 @@
 package com.example.satoruquizzes.satoquiz.websocket;
 
-/*
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -26,4 +26,4 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 }
 
 
- */
+ 

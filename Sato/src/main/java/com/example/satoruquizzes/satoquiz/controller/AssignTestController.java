@@ -15,8 +15,11 @@ import java.util.List;
 @CrossOrigin
 public class AssignTestController {
 
-    @Autowired
-    private AssignTestService assignTestService;
+    private final AssignTestService assignTestService;
+
+    public AssignTestController(AssignTestService assignTestService) {
+        this.assignTestService = assignTestService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<AssignTestDTO> addAssignTest(@RequestBody AssignTestDTO assignTestDTO) {
