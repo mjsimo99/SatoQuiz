@@ -1,8 +1,8 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
 import com.example.satoruquizzes.satoquiz.model.dto.TestQuestionDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.TestQuestionRespDTO;
 import com.example.satoruquizzes.satoquiz.service.TestQuestionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +14,14 @@ import java.util.List;
 @CrossOrigin
 public class TestQuestionController {
 
-    @Autowired
-    private TestQuestionService testQuestionService;
+    private final TestQuestionService testQuestionService;
+
+    public TestQuestionController(TestQuestionService testQuestionService) {
+        this.testQuestionService = testQuestionService;
+    }
 
     @GetMapping("/by-test/{testId}")
-    public List<TestQuestionDTO> getTestQuestionsByTestId(@PathVariable Long testId) {
+    public List<TestQuestionRespDTO> getTestQuestionsByTestId(@PathVariable Long testId) {
         return testQuestionService.getTestQuestionsByTestId(testId);
     }
     @PostMapping("/add")
@@ -28,14 +31,14 @@ public class TestQuestionController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<TestQuestionDTO>> getAllTestQuestions() {
-        List<TestQuestionDTO> testQuestions = testQuestionService.getAllTestQuestions();
-        return ResponseEntity.ok(testQuestions);
+    public ResponseEntity<List<TestQuestionRespDTO>> getAllTestQuestions() {
+        List<TestQuestionRespDTO> testQuestionRespDTO = testQuestionService.getAllTestQuestions();
+        return ResponseEntity.ok(testQuestionRespDTO);
     }
 
     @GetMapping("/{testId}/{questionId}")
-    public ResponseEntity<TestQuestionDTO> getTestQuestionById(@PathVariable Long testId, @PathVariable Long questionId) {
-        TestQuestionDTO testQuestionDTO = testQuestionService.getTestQuestionById(testId, questionId);
-        return ResponseEntity.ok(testQuestionDTO);
+    public ResponseEntity<TestQuestionRespDTO> getTestQuestionById(@PathVariable Long testId, @PathVariable Long questionId) {
+        TestQuestionRespDTO testQuestionRespDTO = testQuestionService.getTestQuestionById(testId, questionId);
+        return ResponseEntity.ok(testQuestionRespDTO);
     }
 }

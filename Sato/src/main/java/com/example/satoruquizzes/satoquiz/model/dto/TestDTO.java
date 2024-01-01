@@ -32,7 +32,7 @@ public class TestDTO {
     private String instructions;
 
     @NotNull(message = "Teacher cannot be null")
-    private TeacherDTO teacher;
+    private Long teacherId;
 
 
 

@@ -2,7 +2,7 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - 'POSTGRES_DB=satoruquiz'
+      - 'POSTGRES_DB=resato'
       - 'POSTGRES_PASSWORD=admin'
       - 'POSTGRES_USER=postgres'
     ports:

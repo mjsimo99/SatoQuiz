@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ParticipateIdDTO {
-    private StudentDTO student;
-    private SalonDTO salon;
+    private Long studentId;
+    private Long salonId;
 }

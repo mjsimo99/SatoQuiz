@@ -1,9 +1,8 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
 import com.example.satoruquizzes.satoquiz.model.dto.ChatMessageDTO;
-import com.example.satoruquizzes.satoquiz.model.dto.responseDto.ChatMessageRespDto;
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.ChatMessageRespDTO;
 import com.example.satoruquizzes.satoquiz.service.ChatService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -21,13 +20,6 @@ import java.util.stream.Collectors;
 public class ChatController {
 
     private final ChatService chatService;
-
-
-
-
-
-
-    @Autowired
     public ChatController(ChatService chatService){
         this.chatService = chatService;
 
@@ -41,19 +33,19 @@ public class ChatController {
     }
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
-    public List<ChatMessageRespDto> getAllChatMessages() {
-        List<ChatMessageRespDto> chatMessageRespDtoDTOs = chatService.getAllChatMessages();
+    public List<ChatMessageRespDTO> getAllChatMessages() {
+        List<ChatMessageRespDTO> chatMessageRespDtoDTOS = chatService.getAllChatMessages();
 
-        return chatMessageRespDtoDTOs.stream()
+        return chatMessageRespDtoDTOS.stream()
                 .map(chatService::convertToDTO)
                 .collect(Collectors.toList());
     }
     @RequestMapping(value = "/messages/{salonId}", method = RequestMethod.GET)
     @ResponseBody
-    public List<ChatMessageRespDto> getChatMessages(@PathVariable Long salonId) {
-        List<ChatMessageRespDto> chatMessageRespDtoDTOs = chatService.getChatMessagesBySalonId(salonId);
+    public List<ChatMessageRespDTO> getChatMessages(@PathVariable Long salonId) {
+        List<ChatMessageRespDTO> chatMessageRespDtoDTOS = chatService.getChatMessagesBySalonId(salonId);
 
-        return chatMessageRespDtoDTOs.stream()
+        return chatMessageRespDtoDTOS.stream()
                 .map(chatService::convertToDTO)
                 .collect(Collectors.toList());
     }

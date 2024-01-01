@@ -1,6 +1,7 @@
 package com.example.satoruquizzes.satoquiz.service;
 
-import com.example.satoruquizzes.satoquiz.exception.EntityNotFoundException;
+import com.example.satoruquizzes.satoquiz.exception.CustomRuntimeException;
+import com.example.satoruquizzes.satoquiz.exception.NotFoundException;
 import com.example.satoruquizzes.satoquiz.model.dto.ParticipateDTO;
 import com.example.satoruquizzes.satoquiz.model.dto.responseDto.ParticipateRespDTO;
 import com.example.satoruquizzes.satoquiz.model.entity.Participate;
@@ -18,23 +19,33 @@ public class ParticipateService {
     private final StudentRepository studentRepository;
     private final ModelMapper modelMapper;
 
-    @Autowired
     public ParticipateService(ParticipateRepository participateRepository, StudentRepository studentRepository, ModelMapper modelMapper) {
         this.participateRepository = participateRepository;
         this.studentRepository = studentRepository;
         this.modelMapper = modelMapper;
     }
 
-
-
-
-
     public ParticipateDTO saveParticipate(ParticipateDTO participateDTO) {
-        Participate participate = modelMapper.map(participateDTO, Participate.class);
+        try {
+            Participate participate = modelMapper.map(participateDTO, Participate.class);
 
-        Participate savedParticipate = participateRepository.save(participate);
+            Participate savedParticipate = participateRepository.save(participate);
 
-        return modelMapper.map(savedParticipate, ParticipateDTO.class);
+            return modelMapper.map(savedParticipate, ParticipateDTO.class);
+        } catch (Exception e) {
+            throw new CustomRuntimeException("Error while saving participate: " + e.getMessage());
+        }
     }
 
+    public ParticipateRespDTO getParticipateById(Long participateId) {
+        try {
+            Participate participate = participateRepository.findById(participateId)
+                    .orElseThrow(() -> new NotFoundException("Participate not found for id: " + participateId));
+            return modelMapper.map(participate, ParticipateRespDTO.class);
+        } catch (Exception e) {
+            throw new CustomRuntimeException("Error while fetching participate by id: " + participateId + ": " + e.getMessage());
+        }
+    }
+
+    // Add other methods as needed with consistent exception handling
 }

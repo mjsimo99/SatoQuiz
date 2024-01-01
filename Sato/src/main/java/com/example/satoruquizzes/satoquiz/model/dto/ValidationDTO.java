@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ValidationDTO {
-    private AnswerDTO answer;
-    private QuestionDTO question;
+    private Long answerId;
+    private Long questionId;
     private double points;
 }

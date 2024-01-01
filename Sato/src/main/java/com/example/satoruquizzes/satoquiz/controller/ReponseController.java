@@ -2,8 +2,8 @@ package com.example.satoruquizzes.satoquiz.controller;
 
 
 import com.example.satoruquizzes.satoquiz.model.dto.ReponseDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.ReponseRespDto;
 import com.example.satoruquizzes.satoquiz.service.ReponseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +15,11 @@ import java.util.List;
 @CrossOrigin
 public class ReponseController {
 
-    @Autowired
-    private ReponseService reponseService;
+    private final ReponseService reponseService;
+
+    public ReponseController(ReponseService reponseService) {
+        this.reponseService = reponseService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<ReponseDTO> addReponse(@RequestBody ReponseDTO reponseDTO) {
@@ -34,15 +37,15 @@ public class ReponseController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ReponseDTO>> getAllReponses() {
-        List<ReponseDTO> reponses = reponseService.getAllReponses();
+    public ResponseEntity<List<ReponseRespDto>> getAllReponses() {
+        List<ReponseRespDto> reponses = reponseService.getAllReponses();
         return ResponseEntity.ok(reponses);
     }
 
     @GetMapping("/{reponseId}")
-    public ResponseEntity<ReponseDTO> getReponseById(@PathVariable Long reponseId) {
-        ReponseDTO reponseDTO = reponseService.getReponseById(reponseId);
-        return ResponseEntity.ok(reponseDTO);
+    public ResponseEntity<ReponseRespDto> getReponseById(@PathVariable Long reponseId) {
+        ReponseRespDto reponseRespDto = reponseService.getReponseById(reponseId);
+        return ResponseEntity.ok(reponseRespDto);
     }
 
     @PutMapping("/update/{reponseId}")

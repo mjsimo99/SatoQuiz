@@ -3,7 +3,6 @@ package com.example.satoruquizzes.satoquiz.controller;
 import com.example.satoruquizzes.satoquiz.model.dto.SalonDTO;
 import com.example.satoruquizzes.satoquiz.model.dto.responseDto.SalonRespDTO;
 import com.example.satoruquizzes.satoquiz.service.SalonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,6 @@ public class SalonController {
 
     private final SalonService salonService;
 
-    @Autowired
     public SalonController(SalonService salonService) {
         this.salonService = salonService;
     }

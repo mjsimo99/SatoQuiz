@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 public class ValidationRespDTO {
-
         private AnswerDTO answer;
         private double points;
     }

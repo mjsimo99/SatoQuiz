@@ -1,9 +1,7 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
 import com.example.satoruquizzes.satoquiz.model.dto.TeacherDTO;
-import com.example.satoruquizzes.satoquiz.model.entity.Teacher;
 import com.example.satoruquizzes.satoquiz.service.TeacherService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +14,11 @@ import java.util.List;
 @CrossOrigin
 public class TeacherController {
 
-    @Autowired
-    private TeacherService teacherService;
+    private final TeacherService teacherService;
+
+    public TeacherController(TeacherService teacherService) {
+        this.teacherService = teacherService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<TeacherDTO> addTeacher(@RequestBody TeacherDTO teacherDTO) {

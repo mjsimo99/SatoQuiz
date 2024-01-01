@@ -1,9 +1,8 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
 import com.example.satoruquizzes.satoquiz.model.dto.AnswerDTO;
-import com.example.satoruquizzes.satoquiz.model.entity.Answer;
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.AnswerRespDTO;
 import com.example.satoruquizzes.satoquiz.service.AnswerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,11 @@ import java.util.List;
 @CrossOrigin
 public class AnswerController {
 
-    @Autowired
-    private AnswerService answerService;
+    private final AnswerService answerService;
+
+    public AnswerController(AnswerService answerService) {
+        this.answerService = answerService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<AnswerDTO> addAnswer(@RequestBody AnswerDTO answerDTO) {
@@ -25,15 +27,15 @@ public class AnswerController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<AnswerDTO>> getAllAnswers() {
-        List<AnswerDTO> answers = answerService.getAllAnswers();
+    public ResponseEntity<List<AnswerRespDTO>> getAllAnswers() {
+        List<AnswerRespDTO> answers = answerService.getAllAnswers();
         return ResponseEntity.ok(answers);
     }
 
     @GetMapping("/{answerId}")
-    public ResponseEntity<AnswerDTO> getAnswerById(@PathVariable Long answerId) {
-        AnswerDTO answerDTO = answerService.getAnswerById(answerId);
-        return ResponseEntity.ok(answerDTO);
+    public ResponseEntity<AnswerRespDTO> getAnswerById(@PathVariable Long answerId) {
+        AnswerRespDTO answerRespDTO = answerService.getAnswerById(answerId);
+        return ResponseEntity.ok(answerRespDTO);
     }
 
     @PutMapping("/update/{answerId}")

@@ -16,8 +16,7 @@ public class AnswerDTO {
     @Size(max = 255, message = "Answer text cannot exceed 255 characters")
     private String answerText;
 
-    @NotNull(message = "Validation IDs cannot be null")
-    private List<Long> validationIds;
+
 
 
 }

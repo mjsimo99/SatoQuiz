@@ -3,7 +3,6 @@ package com.example.satoruquizzes.satoquiz.controller;
 import com.example.satoruquizzes.satoquiz.model.dto.SubjectDTO;
 import com.example.satoruquizzes.satoquiz.model.dto.responseDto.SubjectRespDTO;
 import com.example.satoruquizzes.satoquiz.service.SubjectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +14,11 @@ import java.util.List;
 @CrossOrigin
 public class SubjectController {
 
-    @Autowired
-    private SubjectService subjectService;
+    private final SubjectService subjectService;
+
+    public SubjectController(SubjectService subjectService) {
+        this.subjectService = subjectService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<SubjectDTO> addSubject(@RequestBody SubjectDTO subjectDTO) {
@@ -30,9 +32,9 @@ public class SubjectController {
     }
 
     @GetMapping("/{subjectId}")
-    public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable Long subjectId) {
-        SubjectDTO subjectDTO = subjectService.getSubjectById(subjectId);
-        return ResponseEntity.ok(subjectDTO);
+    public ResponseEntity<SubjectRespDTO> getSubjectById(@PathVariable Long subjectId) {
+        SubjectRespDTO subjectRespDTO = subjectService.getSubjectById(subjectId);
+        return ResponseEntity.ok(subjectRespDTO);
     }
 
     @PutMapping("/{subjectId}")

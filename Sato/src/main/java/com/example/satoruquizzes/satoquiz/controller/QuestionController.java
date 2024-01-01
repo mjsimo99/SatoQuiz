@@ -1,12 +1,9 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
 
-import com.example.satoruquizzes.satoquiz.exception.NotFoundException;
 import com.example.satoruquizzes.satoquiz.model.dto.QuestionDTO;
-import com.example.satoruquizzes.satoquiz.model.entity.Question;
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.QuestionRespDTO;
 import com.example.satoruquizzes.satoquiz.service.QuestionService;
-import jakarta.persistence.EntityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +15,11 @@ import java.util.List;
 @CrossOrigin
 public class QuestionController {
 
-    @Autowired
-    private QuestionService questionService;
+    private final QuestionService questionService;
+
+    public QuestionController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
 
     @PostMapping("/add")
@@ -35,14 +35,14 @@ public class QuestionController {
     }
 
     @GetMapping("/all")
-    public List<QuestionDTO> getAllQuestions() {
+    public List<QuestionRespDTO> getAllQuestions() {
         return questionService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuestionDTO> getQuestionById(@PathVariable Long id) {
-        QuestionDTO questionDTO = questionService.getById(id);
-        return ResponseEntity.ok(questionDTO);
+    public ResponseEntity<QuestionRespDTO> getQuestionById(@PathVariable Long id) {
+        QuestionRespDTO questionRespDTO = questionService.getById(id);
+        return ResponseEntity.ok(questionRespDTO);
     }
 
     @PutMapping("/update/{id}")

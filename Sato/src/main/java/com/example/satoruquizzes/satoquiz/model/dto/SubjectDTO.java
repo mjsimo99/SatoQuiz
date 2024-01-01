@@ -10,5 +10,5 @@ public class SubjectDTO {
 
     @NotBlank(message = "Intitule cannot be blank")
     private String intitule;
-    private SubjectDTO parent;
+    private Long parent;
 }

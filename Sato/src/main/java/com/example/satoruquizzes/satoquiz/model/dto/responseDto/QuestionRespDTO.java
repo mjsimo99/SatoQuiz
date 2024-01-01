@@ -1,7 +1,9 @@
 package com.example.satoruquizzes.satoquiz.model.dto.responseDto;
 
 import com.example.satoruquizzes.satoquiz.model.dto.LevelDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.MediaDTO;
 import com.example.satoruquizzes.satoquiz.model.dto.SubjectDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.TestQuestionDTO;
 import com.example.satoruquizzes.satoquiz.model.enums.TypeAnswer;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +11,8 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.time.LocalTime;
+import java.util.List;
+
 @Data
 public class QuestionRespDTO {
     private Long questionId;
@@ -26,4 +30,12 @@ public class QuestionRespDTO {
     private double scorePoints;
     private SubjectDTO subject;
     private LevelDTO level;
+
+
+    //private List<MediaDTO> mediaList;
+
+    //private List<validationDTO> validations;
+
+    //private  List<TestQuestionDTO> testQuestion;
+
 }

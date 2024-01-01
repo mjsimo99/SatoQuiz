@@ -16,12 +16,12 @@ public class ReponseDTO {
     private double questionResult;
 
     @NotNull(message = "Assign test cannot be null")
-    private AssignTestDTO assignTest;
+    private Long assignTestId;
 
-    private ValidationDTO validation;
+    private ValidationIdDTO validation;
 
-    //private AnswerDTO answer;
 
-    //private QuestionDTO question;
+
+
 
 }

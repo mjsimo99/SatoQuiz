@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class LevelDTO {
 
-    private Long id;
+    private Long levelId;
 
     @NotBlank(message = "Description cannot be blank")
     private String description;

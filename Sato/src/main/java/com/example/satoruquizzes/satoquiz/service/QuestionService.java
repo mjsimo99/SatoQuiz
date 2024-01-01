@@ -1,8 +1,10 @@
 package com.example.satoruquizzes.satoquiz.service;
 
+import com.example.satoruquizzes.satoquiz.exception.CustomRuntimeException;
 import com.example.satoruquizzes.satoquiz.exception.NotFoundException;
 import com.example.satoruquizzes.satoquiz.model.dto.MediaDTO;
 import com.example.satoruquizzes.satoquiz.model.dto.QuestionDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.QuestionRespDTO;
 import com.example.satoruquizzes.satoquiz.model.entity.Level;
 import com.example.satoruquizzes.satoquiz.model.entity.Media;
 import com.example.satoruquizzes.satoquiz.model.entity.Question;
@@ -17,145 +19,120 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 @Service
 public class QuestionService {
 
-    @Autowired
-    private QuestionRepository questionRepository;
-    @Autowired
-    private MediaRepository mediaRepository;
+    private final QuestionRepository questionRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final MediaRepository mediaRepository;
 
-     public QuestionDTO save(QuestionDTO questionDTO) {
-        Question question = modelMapper.map(questionDTO, Question.class);
-        question = questionRepository.save(question);
-        return modelMapper.map(question, QuestionDTO.class);
+    private final ModelMapper modelMapper;
+
+    public QuestionService(QuestionRepository questionRepository, MediaRepository mediaRepository, ModelMapper modelMapper) {
+        this.questionRepository = questionRepository;
+        this.mediaRepository = mediaRepository;
+        this.modelMapper = modelMapper;
     }
 
-
-/*    public QuestionDTO saveWithMedia(QuestionDTO questionDTO) {
-        // Map and save the question
-        Question question = modelMapper.map(questionDTO, Question.class);
-        question = questionRepository.save(question);
-
-        List<MediaDTO> mediaDTOList = questionDTO.getMediaList();
-        if (mediaDTOList != null) {
-            for (MediaDTO mediaDTO : mediaDTOList) {
-                Media media = modelMapper.map(mediaDTO, Media.class);
-                media.setQuestion(question);
-                mediaRepository.save(media);
-            }
+    public QuestionDTO save(QuestionDTO questionDTO) {
+        try {
+            Question question = modelMapper.map(questionDTO, Question.class);
+            question = questionRepository.save(question);
+            return modelMapper.map(question, QuestionDTO.class);
+        } catch (Exception e) {
+            throw new CustomRuntimeException("Error while saving question: " + e.getMessage());
         }
-
-        return modelMapper.map(question, QuestionDTO.class);
     }
-
- */
-
 
     public QuestionDTO saveWithMedia(QuestionDTO questionDTO) {
-        Question question = modelMapper.map(questionDTO, Question.class);
-        question = questionRepository.save(question);
+        try {
+            Question question = modelMapper.map(questionDTO, Question.class);
+            question = questionRepository.save(question);
 
-        List<MediaDTO> mediaDTOList = questionDTO.getMediaList();
-        if (mediaDTOList != null) {
-            question.getMediaList().clear();
+            List<MediaDTO> mediaDTOList = questionDTO.getMediaList();
+            if (mediaDTOList != null) {
+                question.getMediaList().clear();
 
-            for (MediaDTO mediaDTO : mediaDTOList) {
-                Media media = modelMapper.map(mediaDTO, Media.class);
-                media.setQuestion(question);
-                question.getMediaList().add(media);
+                for (MediaDTO mediaDTO : mediaDTOList) {
+                    Media media = modelMapper.map(mediaDTO, Media.class);
+                    media.setQuestion(question);
+                    question.getMediaList().add(media);
+                }
+
+                questionRepository.save(question);
             }
 
-            questionRepository.save(question);
+            return modelMapper.map(question, QuestionDTO.class);
+        } catch (Exception e) {
+            throw new CustomRuntimeException("Error while saving question with media: " + e.getMessage());
         }
-
-        return modelMapper.map(question, QuestionDTO.class);
     }
 
-
-
-    public List<QuestionDTO> getAll() {
-        List<Question> questions = questionRepository.findAll();
-        return questions.stream()
-                .map(question -> modelMapper.map(question, QuestionDTO.class))
-                .collect(Collectors.toList());
+    public List<QuestionRespDTO> getAll() {
+        try {
+            List<Question> questions = questionRepository.findAll();
+            return questions.stream()
+                    .map(question -> modelMapper.map(question, QuestionRespDTO.class))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new CustomRuntimeException("Error while fetching all questions: " + e.getMessage());
+        }
     }
 
-    public QuestionDTO getById(Long id) {
-        Question question = questionRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Question not found for id: " + id));
-        return modelMapper.map(question, QuestionDTO.class);
+    public QuestionRespDTO getById(Long id) {
+        try {
+            Question question = questionRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("Question not found for id: " + id));
+            return modelMapper.map(question, QuestionRespDTO.class);
+        } catch (Exception e) {
+            throw new CustomRuntimeException("Error while fetching question by id: " + id + ": " + e.getMessage());
+        }
     }
 
-    /*
     public QuestionDTO update(Long id, QuestionDTO newQuestionDTO) {
-        Question existingQuestion = questionRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Question not found for id: " + id));
+        try {
+            Question existingQuestion = questionRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("Question not found for id: " + id));
 
-        existingQuestion.setAnswersNumber(newQuestionDTO.getAnswersNumber());
-        existingQuestion.setAnswersNumberCorrect(newQuestionDTO.getAnswersNumberCorrect());
-        existingQuestion.setText(newQuestionDTO.getText());
-        existingQuestion.setType(newQuestionDTO.getType());
-        existingQuestion.setScorePoints(newQuestionDTO.getScorePoints());
+            // Update Question fields
+            existingQuestion.setAnswersNumber(newQuestionDTO.getAnswersNumber());
+            existingQuestion.setAnswersNumberCorrect(newQuestionDTO.getAnswersNumberCorrect());
+            existingQuestion.setText(newQuestionDTO.getText());
+            existingQuestion.setType(newQuestionDTO.getType());
+            existingQuestion.setScorePoints(newQuestionDTO.getScorePoints());
 
-        if (newQuestionDTO.getLevel() != null) {
-            existingQuestion.setLevel(modelMapper.map(newQuestionDTO.getLevel(), Level.class));
-        }
-        if (newQuestionDTO.getSubject() != null) {
-            existingQuestion.setSubject(modelMapper.map(newQuestionDTO.getSubject(), Subject.class));
-        }
+            // Update associated Level and Subject
+            if (newQuestionDTO.getLevelId() != null) {
+                existingQuestion.setLevel(modelMapper.map(newQuestionDTO.getLevelId(), Level.class));
+            }
+            if (newQuestionDTO.getSubjectId() != null) {
+                existingQuestion.setSubject(modelMapper.map(newQuestionDTO.getSubjectId(), Subject.class));
+            }
 
+            List<MediaDTO> mediaDTOList = newQuestionDTO.getMediaList();
+            if (mediaDTOList != null) {
+                existingQuestion.getMediaList().clear();
 
+                for (MediaDTO mediaDTO : mediaDTOList) {
+                    Media existingMedia = findExistingMedia(mediaDTO.getMediaId());
 
-        return modelMapper.map(questionRepository.save(existingQuestion), QuestionDTO.class);
-    }
+                    if (existingMedia != null) {
+                        existingMedia.setType(mediaDTO.getType());
+                        existingMedia.setLink(mediaDTO.getLink());
 
-     */
-    public QuestionDTO update(Long id, QuestionDTO newQuestionDTO) {
-        Question existingQuestion = questionRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Question not found for id: " + id));
+                        existingMedia.setQuestion(existingQuestion);
 
-        // Update Question fields
-        existingQuestion.setAnswersNumber(newQuestionDTO.getAnswersNumber());
-        existingQuestion.setAnswersNumberCorrect(newQuestionDTO.getAnswersNumberCorrect());
-        existingQuestion.setText(newQuestionDTO.getText());
-        existingQuestion.setType(newQuestionDTO.getType());
-        existingQuestion.setScorePoints(newQuestionDTO.getScorePoints());
-
-        // Update associated Level and Subject
-        if (newQuestionDTO.getLevel() != null) {
-            existingQuestion.setLevel(modelMapper.map(newQuestionDTO.getLevel(), Level.class));
-        }
-        if (newQuestionDTO.getSubject() != null) {
-            existingQuestion.setSubject(modelMapper.map(newQuestionDTO.getSubject(), Subject.class));
-        }
-
-        List<MediaDTO> mediaDTOList = newQuestionDTO.getMediaList();
-        if (mediaDTOList != null) {
-            existingQuestion.getMediaList().clear();
-
-            for (MediaDTO mediaDTO : mediaDTOList) {
-                Media existingMedia = findExistingMedia(mediaDTO.getMediaId());
-
-                if (existingMedia != null) {
-                    existingMedia.setType(mediaDTO.getType());
-                    existingMedia.setLink(mediaDTO.getLink());
-
-                    existingMedia.setQuestion(existingQuestion);
-
-                    existingQuestion.getMediaList().add(existingMedia);
+                        existingQuestion.getMediaList().add(existingMedia);
+                    }
                 }
             }
+
+            existingQuestion = questionRepository.save(existingQuestion);
+
+            return modelMapper.map(existingQuestion, QuestionDTO.class);
+        } catch (Exception e) {
+            throw new CustomRuntimeException("Error while updating question: " + e.getMessage());
         }
-
-
-        existingQuestion = questionRepository.save(existingQuestion);
-
-        return modelMapper.map(existingQuestion, QuestionDTO.class);
     }
 
     public Media findExistingMedia(Long mediaId) {
@@ -163,9 +140,11 @@ public class QuestionService {
         return existingMedia.orElse(null);
     }
 
-
     public void delete(Long id) {
-        questionRepository.deleteById(id);
-
+        try {
+            questionRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new CustomRuntimeException("Error while deleting question: " + e.getMessage());
+        }
     }
 }

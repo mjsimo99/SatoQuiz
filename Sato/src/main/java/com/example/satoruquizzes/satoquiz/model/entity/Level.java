@@ -2,7 +2,6 @@ package com.example.satoruquizzes.satoquiz.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 public class Level {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long levelId;
 
     @Column(name = "description")
     private String description;

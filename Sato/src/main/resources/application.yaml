@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://db:5432/satoruquiz
+    url: jdbc:postgresql://db:5432/resato
     username: postgres
     password: admin
   jpa:

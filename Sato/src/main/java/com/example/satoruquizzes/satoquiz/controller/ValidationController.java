@@ -3,11 +3,10 @@ package com.example.satoruquizzes.satoquiz.controller;
 
 import com.example.satoruquizzes.satoquiz.exception.NotFoundException;
 import com.example.satoruquizzes.satoquiz.model.dto.ValidationDTO;
-import com.example.satoruquizzes.satoquiz.model.entity.Validation;
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.ValidationRespDTO;
 import com.example.satoruquizzes.satoquiz.service.ValidationService;
 import jakarta.validation.ValidationException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+ddimport org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +18,11 @@ import java.util.List;
 @CrossOrigin
 public class ValidationController {
 
-    @Autowired
-    private ValidationService validationService;
+    private final ValidationService validationService;
+
+    public ValidationController(ValidationService validationService) {
+        this.validationService = validationService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<ValidationDTO> addValidation(@RequestBody ValidationDTO validationDTO) {
@@ -29,15 +31,15 @@ public class ValidationController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ValidationDTO>> getAllValidations() {
-        List<ValidationDTO> validations = validationService.getAllValidations();
+    public ResponseEntity<List<ValidationRespDTO>> getAllValidations() {
+        List<ValidationRespDTO> validations = validationService.getAllValidations();
         return ResponseEntity.ok(validations);
     }
 
     @GetMapping("/{questionId}/{answerId}")
-    public ResponseEntity<ValidationDTO> getValidationByIds(@PathVariable Long questionId, @PathVariable Long answerId) {
-        ValidationDTO validationDTO = validationService.getValidationByIds(questionId, answerId);
-        return ResponseEntity.ok(validationDTO);
+    public ResponseEntity<ValidationRespDTO> getValidationByIds(@PathVariable Long questionId, @PathVariable Long answerId) {
+        ValidationRespDTO validationRespDTO = validationService.getValidationByIds(questionId, answerId);
+        return ResponseEntity.ok(validationRespDTO);
     }
     @DeleteMapping("/{questionId}/{answerId}")
     public ResponseEntity<String> deleteValidation(@PathVariable Long questionId, @PathVariable Long answerId) {

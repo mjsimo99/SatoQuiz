@@ -1,8 +1,8 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
 import com.example.satoruquizzes.satoquiz.model.dto.TestDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.TestResDTO;
 import com.example.satoruquizzes.satoquiz.service.TestService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +14,11 @@ import java.util.List;
 @CrossOrigin
 public class TestController {
 
-    @Autowired
-    private TestService testService;
+    private final TestService testService;
+
+    public TestController(TestService testService) {
+        this.testService = testService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<TestDTO> addTest(@RequestBody TestDTO testDTO) {
@@ -24,15 +27,15 @@ public class TestController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<TestDTO>> getAllTests() {
-        List<TestDTO> tests = testService.getAllTests();
+    public ResponseEntity<List<TestResDTO>> getAllTests() {
+        List<TestResDTO> tests = testService.getAllTests();
         return ResponseEntity.ok(tests);
     }
 
     @GetMapping("/{testId}")
-    public ResponseEntity<TestDTO> getTestById(@PathVariable Long testId) {
-        TestDTO testDTO = testService.getTestById(testId);
-        return ResponseEntity.ok(testDTO);
+    public ResponseEntity<TestResDTO> getTestById(@PathVariable Long testId) {
+        TestResDTO testResDTO = testService.getTestById(testId);
+        return ResponseEntity.ok(testResDTO);
     }
 
     @PutMapping("/update/{testId}")

@@ -1,9 +1,8 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
 import com.example.satoruquizzes.satoquiz.model.dto.AssignTestDTO;
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.AssignTestRespDTO;
 import com.example.satoruquizzes.satoquiz.service.AssignTestService;
-import jakarta.ws.rs.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,11 @@ import java.util.List;
 @CrossOrigin
 public class AssignTestController {
 
-    @Autowired
-    private AssignTestService assignTestService;
+    private final AssignTestService assignTestService;
+
+    public AssignTestController(AssignTestService assignTestService) {
+        this.assignTestService = assignTestService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<AssignTestDTO> addAssignTest(@RequestBody AssignTestDTO assignTestDTO) {
@@ -25,15 +27,15 @@ public class AssignTestController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<AssignTestDTO>> getAllAssignTests() {
-        List<AssignTestDTO> assignTests = assignTestService.getAllAssignTests();
+    public ResponseEntity<List<AssignTestRespDTO>> getAllAssignTests() {
+        List<AssignTestRespDTO> assignTests = assignTestService.getAllAssignTests();
         return ResponseEntity.ok(assignTests);
     }
 
     @GetMapping("/{assignTestId}")
-    public ResponseEntity<AssignTestDTO> getAssignTestById(@PathVariable Long assignTestId) {
-        AssignTestDTO assignTestDTO = assignTestService.getAssignTestById(assignTestId);
-        return ResponseEntity.ok(assignTestDTO);
+    public ResponseEntity<AssignTestRespDTO> getAssignTestById(@PathVariable Long assignTestId) {
+        AssignTestRespDTO assignTestRespDTO = assignTestService.getAssignTestById(assignTestId);
+        return ResponseEntity.ok(assignTestRespDTO);
     }
 
     @PutMapping("/update/{assignTestId}")

@@ -1,6 +1,7 @@
 package com.example.satoruquizzes.satoquiz.model.dto;
 
 import com.example.satoruquizzes.satoquiz.model.dto.responseDto.ReponseRespDto;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,21 +25,20 @@ public class AssignTestDTO {
     @NotNull(message = "End date cannot be null")
     private LocalDateTime endDate;
 
+    @NotBlank(message = "Raison cannot be blank")
     private String raison;
 
-
-
+    @NotNull(message = "attemptNumber cannot be null")
     private Integer attemptNumber;
 
     @NotNull(message = "Final result cannot be null")
     private double finalResult;
 
     @NotNull(message = "Student cannot be null")
-    private StudentDTO student;
+    private Long studentId;
 
     @NotNull(message = "Test cannot be null")
-    private TestDTO test;
+    private Long testId;
 
-    private List<ReponseRespDto> reponses;
 
 }

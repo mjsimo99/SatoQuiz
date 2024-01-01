@@ -11,7 +11,7 @@ import java.time.Duration;
 @NoArgsConstructor
 public class TestQuestionDTO {
 
-    private TestDTO test;
-    private QuestionDTO question;
+    private Long testId;
+    private Long questionId;
     private Integer temporize;
 }

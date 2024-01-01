@@ -1,9 +1,8 @@
 package com.example.satoruquizzes.satoquiz.controller;
 
 import com.example.satoruquizzes.satoquiz.model.dto.LevelDTO;
-import com.example.satoruquizzes.satoquiz.model.entity.Level;
+import com.example.satoruquizzes.satoquiz.model.dto.responseDto.LevelRespDTO;
 import com.example.satoruquizzes.satoquiz.service.LevelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +13,11 @@ import java.util.List;
 @CrossOrigin
 public class LevelController {
 
-    @Autowired
-    private LevelService levelService;
+    private final LevelService levelService;
+
+    public LevelController(LevelService levelService) {
+        this.levelService = levelService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<LevelDTO> addLevel(@RequestBody LevelDTO levelDTO) {
@@ -24,14 +26,14 @@ public class LevelController {
     }
 
     @GetMapping("/all")
-    public List<LevelDTO> getAllLevels() {
+    public List<LevelRespDTO> getAllLevels() {
         return levelService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LevelDTO> getLevelById(@PathVariable Long id) {
-        LevelDTO levelDTO = levelService.getById(id);
-        return ResponseEntity.ok(levelDTO);
+    public ResponseEntity<LevelRespDTO> getLevelById(@PathVariable Long id) {
+        LevelRespDTO levelRespDTO = levelService.getById(id);
+        return ResponseEntity.ok(levelRespDTO);
     }
 
     @PutMapping("/update/{id}")

@@ -26,11 +26,11 @@ public class QuestionDTO {
     private TypeAnswer type;
     @Positive(message = "Score points must be a positive value")
     private double scorePoints;
-    private SubjectDTO subject;
-    private LevelDTO level;
+    private Long subjectId;
+    private Long levelId;
 
     private List<MediaDTO> mediaList;
 
-    private List<ValidationRespDTO> validations;
+    //private List<ValidationRespDTO> validations;
 
 }

@@ -2,14 +2,11 @@ package com.example.satoruquizzes.satoquiz.controller;
 
 
 import com.example.satoruquizzes.satoquiz.model.dto.StudentDTO;
-import com.example.satoruquizzes.satoquiz.model.entity.Student;
 import com.example.satoruquizzes.satoquiz.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -17,8 +14,11 @@ import java.util.List;
 @CrossOrigin
 public class StudentController {
 
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<StudentDTO> addStudent(@RequestBody StudentDTO studentDTO) {
