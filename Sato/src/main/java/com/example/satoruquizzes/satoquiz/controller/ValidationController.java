@@ -6,7 +6,7 @@ import com.example.satoruquizzes.satoquiz.model.dto.ValidationDTO;
 import com.example.satoruquizzes.satoquiz.model.dto.responseDto.ValidationRespDTO;
 import com.example.satoruquizzes.satoquiz.service.ValidationService;
 import jakarta.validation.ValidationException;
-ddimport org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
