@@ -1,6 +1,7 @@
 package com.example.satoruquizzes.satoquiz.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class Student extends User {
     @Column(name = "studentId")
     private Long studentId;
 
+    @NotNull(message = "Registration date cannot be null")
     @Column(name = "registrationDate")
     private LocalDate registrationDate;
 

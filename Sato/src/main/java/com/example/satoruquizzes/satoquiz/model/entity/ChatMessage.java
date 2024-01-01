@@ -1,6 +1,8 @@
 package com.example.satoruquizzes.satoquiz.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,7 @@ public class ChatMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long messageId;
 
+    @NotBlank(message = "Content cannot be blank")
     @Column(name = "content")
     private String content;
 
@@ -31,8 +34,7 @@ public class ChatMessage {
     })
     private Participate participate;
 
-
+    @CreationTimestamp
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
-
 }

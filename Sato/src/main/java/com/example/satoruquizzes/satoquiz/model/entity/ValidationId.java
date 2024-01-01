@@ -6,12 +6,6 @@ import java.io.Serializable;
 
 @Data
 public class ValidationId implements Serializable {
-
-
-
     private Long question;
     private Long answer;
-
-
-
 }

@@ -13,7 +13,6 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 @Table(name = "Answers")
 public class Answer {
@@ -26,11 +25,9 @@ public class Answer {
     @Size(max = 255, message = "Answer text cannot exceed 255 characters")
     private String answerText;
 
-    @NotNull(message = "Validation  cannot be null")
+    @NotNull(message = "Validation cannot be null")
     @JsonIgnore
     @OneToMany(mappedBy = "answer")
     private List<Validation> validations;
-
-
 
 }

@@ -14,23 +14,30 @@ import java.util.List;
 public class QuestionDTO {
 
     private Long questionId;
+
     @Positive(message = "Answers number must be a positive value")
     private int answersNumber;
+
     @Positive(message = "Correct answers number must be a positive value")
     private int answersNumberCorrect;
+
     @NotBlank(message = "Question text cannot be blank")
     private String text;
+
     @NotNull(message = "Duration cannot be null")
     private LocalTime duration;
+
     @NotNull(message = "Type cannot be null")
     private TypeAnswer type;
+
     @Positive(message = "Score points must be a positive value")
     private double scorePoints;
+
+    @NotNull(message = "Subject ID cannot be null")
     private Long subjectId;
+
+    @NotNull(message = "Level ID cannot be null")
     private Long levelId;
 
     private List<MediaDTO> mediaList;
-
-    //private List<ValidationRespDTO> validations;
-
 }

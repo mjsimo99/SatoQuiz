@@ -12,11 +12,12 @@ public class LevelDTO {
 
     @NotBlank(message = "Description cannot be blank")
     private String description;
+
     @NotNull(message = "Max points cannot be null")
     @PositiveOrZero(message = "Max points must be a positive or zero value")
     private double maxPoints;
+
     @NotNull(message = "Min points cannot be null")
     @PositiveOrZero(message = "Min points must be a positive or zero value")
     private double minPoints;
-
 }

@@ -97,7 +97,7 @@ public class AssignTestService {
                 AssignTest assignTestToUpdate = existingAssignTest.get();
                 assignTestToUpdate.setStartDate(updatedAssignTestDTO.getStartDate());
                 assignTestToUpdate.setEndDate(updatedAssignTestDTO.getEndDate());
-                assignTestToUpdate.setRaison(updatedAssignTestDTO.getRaison());
+                assignTestToUpdate.setReason(updatedAssignTestDTO.getReason());
                 assignTestToUpdate.setAttemptNumber(updatedAssignTestDTO.getAttemptNumber());
                 assignTestToUpdate.setFinalResult(updatedAssignTestDTO.getFinalResult());
 
@@ -132,7 +132,7 @@ public class AssignTestService {
             if (existingAssignTest.isPresent()) {
                 AssignTest assignTestToUpdate = existingAssignTest.get();
                 assignTestToUpdate.setAttemptNumber(newAttemptNumber);
-                assignTestToUpdate.setFinalResult(0);
+                assignTestToUpdate.setFinalResult((double) 0);
                 assignTestRepository.save(assignTestToUpdate);
             } else {
                 throw new NotFoundException("AssignTest not found for id: " + assignTestId);

@@ -1,6 +1,7 @@
 package com.example.satoruquizzes.satoquiz.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -10,16 +11,14 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
-
 public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long subjectId;
 
-
+    @NotBlank(message = "Intitule cannot be blank")
     private String intitule;
 
     @ManyToOne
@@ -31,5 +30,4 @@ public class Subject {
 
     @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
-
 }
