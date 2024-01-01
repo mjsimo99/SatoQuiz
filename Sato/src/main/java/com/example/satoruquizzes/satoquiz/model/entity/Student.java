@@ -26,4 +26,7 @@ public class Student extends User {
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AssignTest> assignTests;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Participate> participates;
 }

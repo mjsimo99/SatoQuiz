@@ -1,16 +1,15 @@
-package com.example.satoruquizzes.satoquiz.model.entity;
+package com.example.satoruquizzes.satoquiz.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HelloMessage {
-
+public class SalonDTO {
+    private Long id;
     private String name;
-
 }
-
-

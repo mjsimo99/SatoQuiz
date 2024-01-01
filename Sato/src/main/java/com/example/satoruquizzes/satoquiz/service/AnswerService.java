@@ -15,11 +15,14 @@ import java.util.stream.Collectors;
 @Service
 public class AnswerService {
 
-    @Autowired
-    private AnswerRepository answerRepository;
+    private final AnswerRepository answerRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
+    public AnswerService(AnswerRepository answerRepository, ModelMapper modelMapper) {
+        this.answerRepository = answerRepository;
+        this.modelMapper = modelMapper;
+    }
 
     public AnswerDTO save(AnswerDTO answerDTO) {
         Answer answer = modelMapper.map(answerDTO, Answer.class);
