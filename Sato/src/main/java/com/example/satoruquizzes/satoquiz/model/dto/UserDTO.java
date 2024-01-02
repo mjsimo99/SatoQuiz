@@ -22,4 +22,17 @@ public class UserDTO {
     @NotNull(message = "Address cannot be null")
     @Size(max = 255, message = "Address cannot exceed 255 characters")
     protected String address;
+
+
+    @NotNull(message = "Username cannot be null")
+    @Size(max = 255, message = "Username cannot exceed 255 characters")
+    private String username;
+
+    @NotNull(message = "Password cannot be null")
+    private String password;
+
+    @NotNull(message = "User type cannot be null")
+    private String userType;
+
+
 }
