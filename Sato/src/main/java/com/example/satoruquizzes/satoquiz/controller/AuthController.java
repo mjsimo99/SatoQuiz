@@ -16,59 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @CrossOrigin
 public class AuthController {
-    /*
-        private final AuthService authService;
-        private final StudentService studentService;
-
-        private final TeacherService teacherService;
-
-        private final ModelMapper modelMapper;
-
-        public AuthController(AuthService authService,StudentService studentService,TeacherService teacherService,ModelMapper modelMapper) {
-            this.authService = authService;
-            this.studentService = studentService;
-            this.teacherService = teacherService;
-            this.modelMapper = modelMapper;
-        }
-
-        @PostMapping("/login")
-        public ResponseEntity<String> login(@RequestBody UserDTO userDTO) {
-            UserDTO authenticatedUser = authService.authenticate(userDTO);
-
-            if (authenticatedUser != null && authenticatedUser.getPassword().equals(userDTO.getPassword())) {
-                // Authentication successful
-                return ResponseEntity.ok("Login successful");
-            } else {
-                // Authentication failed
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-            }
-        }
-        @PostMapping("/register")
-        public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
-            if ("student".equals(userDTO.getUserType())) {
-                StudentDTO studentDTO = modelMapper.map(userDTO, StudentDTO.class);
-                // Log values for debugging
-                System.out.println("userDTO: " + userDTO);
-                System.out.println("studentDTO: " + studentDTO);
-                studentService.save(studentDTO);
-            } else if ("teacher".equals(userDTO.getUserType())) {
-                TeacherDTO teacherDTO = modelMapper.map(userDTO, TeacherDTO.class);
-                // Log values for debugging
-                System.out.println("userDTO: " + userDTO);
-                System.out.println("teacherDTO: " + teacherDTO);
-                teacherService.save(teacherDTO);
-            } else {
-                return ResponseEntity.badRequest().body("Invalid userType");
-            }
-
-            authService.addUser(userDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
-        }
-
-    }
 
 
-     */
     private final AuthService authService;
     private final ModelMapper modelMapper;
     private final StudentService studentService;
