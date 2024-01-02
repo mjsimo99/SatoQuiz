@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class ChatController {
 
     private final ChatService chatService;
+    private final SimpMessagingTemplate messagingTemplate;
 
 
 
@@ -28,17 +30,19 @@ public class ChatController {
 
 
     @Autowired
-    public ChatController(ChatService chatService){
+    public ChatController(ChatService chatService, SimpMessagingTemplate messagingTemplate) {
         this.chatService = chatService;
+        this.messagingTemplate = messagingTemplate;
 
 
-    }
+    }/*
     @MessageMapping("/chat.sendMessage/{salonId}")
     @SendTo("/topic/salon/{salonId}")
     public ChatMessageDTO handleChatMessage(@DestinationVariable Long salonId, ChatMessageDTO messageDTO) {
         chatService.saveChatMessage(messageDTO.getStudentId(), salonId, messageDTO.getContent());
         return messageDTO;
     }
+    */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
     public List<ChatMessageRespDto> getAllChatMessages() {
@@ -58,6 +62,15 @@ public class ChatController {
                 .collect(Collectors.toList());
     }
 
+    @MessageMapping("/chat.sendMessage/{salonId}")
+    @SendTo("/topic/salon/{salonId}")
+    public ChatMessageDTO handleChatMessage(@DestinationVariable Long salonId, ChatMessageDTO messageDTO) {
+        chatService.saveChatMessage(messageDTO.getStudentId(), salonId, messageDTO.getContent());
 
+        // Send a notification to all clients when a new message is received
+        messagingTemplate.convertAndSendToUser(messageDTO.getStudentId().toString(), "/queue/notification", "New message received!");
+
+        return messageDTO;
+    }
 
 }

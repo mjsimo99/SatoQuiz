@@ -19,8 +19,4 @@ public class ChatMessageRespDto {
     private String content;
     private ParticipateDTO participate;
     private LocalDateTime timestamp;
-
-
-
-
 }
