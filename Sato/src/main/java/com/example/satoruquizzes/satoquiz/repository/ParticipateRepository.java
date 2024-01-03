@@ -15,5 +15,4 @@ public interface ParticipateRepository extends JpaRepository<Participate, Long> 
 
     @Query("SELECT p FROM Participate p WHERE p.participateId.student.studentId = :studentId AND p.participateId.salon.id = :salonId")
     Optional<Participate> findByStudentIdAndSalonId(Long studentId, Long salonId);
-    Optional<Participate> findByStudentStudentIdAndSalonId(Long studentId, Long salonId);
 }
