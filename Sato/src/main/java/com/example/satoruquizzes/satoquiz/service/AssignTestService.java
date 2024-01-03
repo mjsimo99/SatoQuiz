@@ -112,8 +112,8 @@ public class AssignTestService {
                     throw new NotFoundException("Student not found for id: " + updatedAssignTestDTO.getStudentId());
                 }
 
-                assignTestToUpdate.setTest(testOptional.get());  // Set the associated Test
-                assignTestToUpdate.setStudent(studentOptional.get());  // Set the associated Student
+                assignTestToUpdate.setTest(testOptional.get());
+                assignTestToUpdate.setStudent(studentOptional.get());
 
                 assignTestToUpdate = assignTestRepository.save(assignTestToUpdate);
                 return modelMapper.map(assignTestToUpdate, AssignTestDTO.class);
