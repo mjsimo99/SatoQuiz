@@ -35,14 +35,17 @@ public class ChatController {
         this.messagingTemplate = messagingTemplate;
 
 
-    }/*
+    }
+    /*
     @MessageMapping("/chat.sendMessage/{salonId}")
     @SendTo("/topic/salon/{salonId}")
     public ChatMessageDTO handleChatMessage(@DestinationVariable Long salonId, ChatMessageDTO messageDTO) {
         chatService.saveChatMessage(messageDTO.getStudentId(), salonId, messageDTO.getContent());
         return messageDTO;
     }
-    */
+
+     */
+
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
     public List<ChatMessageRespDto> getAllChatMessages() {
@@ -61,13 +64,11 @@ public class ChatController {
                 .map(chatService::convertToDTO)
                 .collect(Collectors.toList());
     }
-
     @MessageMapping("/chat.sendMessage/{salonId}")
     @SendTo("/topic/salon/{salonId}")
     public ChatMessageDTO handleChatMessage(@DestinationVariable Long salonId, ChatMessageDTO messageDTO) {
         chatService.saveChatMessage(messageDTO.getStudentId(), salonId, messageDTO.getContent());
 
-        // Send a notification to all clients when a new message is received
         messagingTemplate.convertAndSendToUser(messageDTO.getStudentId().toString(), "/queue/notification", "New message received!");
 
         return messageDTO;
