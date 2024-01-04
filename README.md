@@ -541,3 +541,29 @@ ________________________________________________________________________
     },
     "points": 8.0
   }
+
+_________________________________________________________________
+
+### Participates
+
+
+#### Add Participate 
+- **URL:** `POST http://localhost:8080/participates`
+- **Description:** Add a new participate.
+- **Request Body:**
+  ```json
+  {
+    "date": "2023-12-30",
+    "participateId": {
+      "student": {
+        "studentId": 16
+      },
+      "salon": {
+        "id": 1000
+      }
+    }
+  }
+
+
+
+
