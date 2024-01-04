@@ -26,7 +26,7 @@ public class AnswerController {
     public ResponseEntity<AnswerDTO> addAnswer(@RequestBody AnswerDTO answerDTO) {
         // Save the answer using the service
         AnswerDTO savedAnswerDTO = answerService.save(answerDTO);
-        // Return the saved answer with HTTP status 201 (CREATED)
+        // Return the saved answer
         return ResponseEntity.status(HttpStatus.CREATED).body(savedAnswerDTO);
     }
 
